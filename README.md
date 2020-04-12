@@ -25,7 +25,11 @@ Images:
 
 ### Run
 
+Examples:
+
 `docker run --rm -it -v$(pwd)/root/:/root --net host parrot`
+
+`docker run --rm -it -v$(pwd):/root -v~/workspace/re/r2_config/.radare2rc:/root/.radare2rc  --net host parrot-re`
 
 Explanation:
 
