@@ -16,26 +16,18 @@ def main():
         [f for f in os.listdir(build_context) if f.startswith("Dockerfile")]
     )
 
-    results = dict()  # {tag_name : successful_bool}
     for name in dockerfiles:
         tag_name = "_".join(name.split("_")[1:])
         cmd = f"docker build -f {name} -t {tag_name} {build_context}"
         try:
-            print(f"Building {tag_name}...")
+            print(f"Building {tag_name}...\n\tThis may take a while.")
             output = subprocess.check_output(cmd.split(" "))
             if f"Successfully tagged {tag_name}:latest" in output.decode().split("\n")[-3:]:
-                results[tag_name] = True
+                print(f"Build for {tag_name} {GREEN}Successful{RESET}")
                 continue
-            results[tag_name] = False
+            print(f"Build for {tag_name} {RED}FAILED{RESET}")
         except Exception:
-            results[tag_name] = False
-
-    # Print summary as Docker will eat the terminal during build
-    for tag, success in results.items():
-        if success:
-            print(f"Build for {tag} {GREEN}Successful{RESET}")
-        else:
-            print(f"Build for {tag} {RED}FAILED{RESET}")
+            print(f"Build for {tag_name} {RED}FAILED{RESET}")
 
 
 if __name__ == "__main__":
