@@ -1,0 +1,9 @@
+FROM parrotsec/security:latest
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install updates and common utilities
+RUN apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get install -y \
+    nfs-common \
