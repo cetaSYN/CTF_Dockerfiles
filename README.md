@@ -3,19 +3,15 @@
 This repo is a collection of personal resources for a dockerized CTF environment.
 
 Images:
+
 - `parrot`
   - Modded version of ParrotOS (`parrotsec/security:latest`)
-  - Updates all packages using `apt-get dist-upgrade`
-  - Adds packages:
-    - `nfs-common`
-      - Adds `showmounts` and the ability to mount NFS shares
-- `parrot-re`
-  - Modded version of `parrot`
-  - Adds software:
-    - `gdb`
-    - `GEF`
-      - `GEF-extras`
-    - `radare2`
+  - Adds utilities common in CTFs
+  - Adds logging for all commands and output (nice for write-ups and reports)
+- `revr-multiarch`
+  - Modded version of `ubuntu`
+  - Heavily influcenced by skysider/multiarch-docker
+  - Build for cross-architecture reverse engineering / vulnerability research, especially in CTF environments
 
 ## Setup
 
@@ -27,9 +23,9 @@ Images:
 
 Examples:
 
-`docker run --rm -it -v$(pwd)/root/:/root --net host parrot`
+`docker run --rm -it -v$(pwd):/root/ --net host parrot`
 
-`docker run --rm -it -v$(pwd):/root -v~/workspace/re/r2_config/.radare2rc:/root/.radare2rc  --net host parrot-re`
+`docker run --rm -it -v$(pwd):/root/ parrot-re`
 
 Explanation:
 
@@ -39,8 +35,8 @@ Explanation:
   - All other data is removed when exiting. Be sure to store it correctly!
 - `-it`
   - Tells Docker to set up an interactive pseudo-terminal
-- `-v$(pwd)/root/:/root`: Create a mapped mount
-  - As written the map is between the host `./root/` and container `/root`
+- `-v$(pwd):/root/`: Create a mapped mount
+  - As written the map is between the host working directory and container `/root/`
   - **NOTE:** Never map to a folder with any private or system files from the host.
 - `--net host`
   - Tells Docker to use the host's networking stack instead a Docker network
