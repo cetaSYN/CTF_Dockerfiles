@@ -46,8 +46,11 @@ RUN git clone https://github.com/radare/radare2 && \
 
 RUN python3 -m pip install -U pip && \
     python3 -m pip install --no-cache-dir \
+        angr \
+        claripy \
+        ipython \
 	pwntools \
-	ropper 
+	ropper
 
 RUN wget -q -O- https://github.com/hugsy/gef/raw/master/scripts/gef.sh | sh && \
     wget -q -O- https://github.com/hugsy/gef/raw/master/scripts/gef-extras.sh | sh
